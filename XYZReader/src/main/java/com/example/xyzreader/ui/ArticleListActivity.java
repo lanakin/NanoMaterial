@@ -14,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -171,17 +170,22 @@ public class ArticleListActivity extends AppCompatActivity implements  //ActionB
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
 
                 holder.subtitleView.setText(Html.fromHtml(
+                        mCursor.getString(ArticleLoader.Query.AUTHOR)) /*+ "<br/>" +
                         DateUtils.getRelativeTimeSpanString(
                                 publishedDate.getTime(),
                                 System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                                DateUtils.FORMAT_ABBREV_ALL).toString()
-                                + "<br/>" + " by "
-                                + mCursor.getString(ArticleLoader.Query.AUTHOR)));
+                                DateUtils.FORMAT_ABBREV_ALL).toString())*/
+                );
+                                //+ "<br/>" //+ " by "
+                                //+ mCursor.getString(ArticleLoader.Query.AUTHOR)
             } else {
                 holder.subtitleView.setText(Html.fromHtml(
-                        outputFormat.format(publishedDate)
-                        + "<br/>" + " by "
-                        + mCursor.getString(ArticleLoader.Query.AUTHOR)));
+                       /* outputFormat.format(publishedDate)
+                        + "<br/>" //+ " by "
+                        + mCursor.getString(ArticleLoader.Query.AUTHOR)));*/
+                          mCursor.getString(ArticleLoader.Query.AUTHOR))
+                        /* + "<br/>" //+ " by "
+                         + outputFormat.format(publishedDate)*/);
             }
             holder.thumbnailView.setImageUrl(
                     mCursor.getString(ArticleLoader.Query.THUMB_URL),
