@@ -19,6 +19,8 @@ import com.example.xyzreader.data.ItemsContract;
 
 /**
  * An activity representing a single Article detail screen, letting you swipe between articles.
+ *
+ * Update - Removing swiping between articles ~
  */
 public class ArticleDetailActivity extends AppCompatActivity //ActionBarActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -27,8 +29,9 @@ public class ArticleDetailActivity extends AppCompatActivity //ActionBarActivity
     private long mStartId;
 
     private long mSelectedItemId;
+    //private int mTopInset;
     //private int mSelectedItemUpButtonFloor = Integer.MAX_VALUE;
-    private int mTopInset;
+
 
     private ViewPager mPager;
     private MyPagerAdapter mPagerAdapter;
@@ -50,7 +53,7 @@ public class ArticleDetailActivity extends AppCompatActivity //ActionBarActivity
         getLoaderManager().initLoader(0, null, this);
 
         mPagerAdapter = new MyPagerAdapter(getFragmentManager());   //why a view pager to view all the other articles on swipe? i find this odd
-                                                                    //and it wasn't obvious to me, outside of the code, that you could swipe between
+                                                                    //and it wasn't obvious to me, outside of this code, that you could swipe between
                                                                     //articles on the detail screen anyway
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
@@ -102,7 +105,7 @@ public class ArticleDetailActivity extends AppCompatActivity //ActionBarActivity
 
         if (savedInstanceState == null) {
             if (getIntent() != null && getIntent().getData() != null) {
-                mStartId = ItemsContract.Items.getItemId(getIntent().getData());
+                mStartId = ItemsContract.Items.getItemId(getIntent().getData());  /** item chosen from main list **/
                 mSelectedItemId = mStartId;
             }
         }
@@ -116,7 +119,8 @@ public class ArticleDetailActivity extends AppCompatActivity //ActionBarActivity
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         mCursor = cursor;
-        mPagerAdapter.notifyDataSetChanged();
+        if(!(mPagerAdapter==null))
+            mPagerAdapter.notifyDataSetChanged();
 
         // Select the start ID
         if (mStartId > 0) {
@@ -170,7 +174,7 @@ public class ArticleDetailActivity extends AppCompatActivity //ActionBarActivity
         @Override
         public Fragment getItem(int position) {
             mCursor.moveToPosition(position);
-            return ArticleDetailFragment.newInstance(mCursor.getLong(ArticleLoader.Query._ID));
+            return ArticleDetailFragment.newInstance(mCursor.getLong(ArticleLoader.Query._ID));  /**create article detail fragment**/
         }
 
         @Override

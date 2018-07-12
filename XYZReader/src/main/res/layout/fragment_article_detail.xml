@@ -17,18 +17,26 @@
                 android:id="@+id/photo_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/photo_placeholder">
+                android:background="@color/photo_placeholder"
+
+                >
                 <!--suppress AndroidLintContentDescription -->
                 <ImageView
                     android:id="@+id/photo"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                     />
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/detail_photo_height"
+                    android:scaleType="centerCrop"
+                     /> <!--added center crop, took out android:layout_width="100dp"
+                    android:layout_height="100dp" changed to (macro_layout)
+                dimen/detail_photo_height -->
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="112dp"
+                    android:layout_height="@dimen/detail_photo_height"
                     android:background="@drawable/photo_background_protection" />
+                <!-- android:layout_height="112dp" changed to (macro_layout)
+                dimen/detail_photo_height
+                -->
 
             </FrameLayout>
 
@@ -40,7 +48,14 @@
                 android:maxWidth="@dimen/detail_card_max_width"
                 android:background="#fff"
                 android:elevation="2dp"
-                android:layout_marginTop="@dimen/detail_card_top_margin">
+                android:layout_marginTop="@dimen/detail_card_top_margin"
+                >
+
+                <!-- android:layout_marginTop="@dimen/detail_card_top_margin"
+                it was leaving a gap between photo and the article title bar - but found in
+                macro_layout's dimen that this value depends on dimen/detail_photo_height
+                which is now used.
+                -->
 
                 <LinearLayout
                     android:id="@+id/meta_bar"
@@ -53,7 +68,7 @@
                     android:paddingRight="@dimen/detail_inner_horiz_margin"
                     android:paddingTop="@dimen/detail_metabar_vert_padding"
                     android:paddingBottom="@dimen/detail_metabar_vert_padding"
-                    android:layout_marginBottom="@dimen/detail_metabar_vert_padding">
+                    android:layout_marginBottom="@dimen/detail_metabar_vert_padding"> <!-- android:background="#333"-->
 
                     <TextView
                         android:id="@+id/article_title"
@@ -89,6 +104,7 @@
                     android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier" />
 
             </com.example.xyzreader.ui.MaxWidthLinearLayout>  <!-- @color/theme_accent -->
+
         </FrameLayout>
     </com.example.xyzreader.ui.ObservableScrollView>
 
