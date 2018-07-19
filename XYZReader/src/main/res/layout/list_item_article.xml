@@ -37,7 +37,11 @@
             android:paddingBottom="4dp"
 
             android:ellipsize="end"
-            android:maxLines="4" />  <!-- android:textColor="@color/ltgray"
+            android:maxLines="4"
+
+            />  <!--
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/ltgray"
               android:paddingLeft="16dp"
             android:paddingTop="16dp"
             android:paddingRight="16dp"
@@ -54,7 +58,9 @@
             android:paddingBottom="8dp"
             android:textColor="#6000"
             android:maxLines="2"
-            android:ellipsize="end" />
-    </LinearLayout>
+            android:ellipsize="end"
+
+            />
+    </LinearLayout> <!-- style="@style/TextAppearance.AppCompat.Body1" -->
 
 </android.support.v7.widget.CardView>

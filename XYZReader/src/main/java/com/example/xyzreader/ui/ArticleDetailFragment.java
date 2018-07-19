@@ -29,10 +29,6 @@ import com.android.volley.toolbox.ImageLoader;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.TextNode;
-import org.jsoup.safety.Whitelist;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -228,7 +224,9 @@ public class ArticleDetailFragment extends Fragment implements
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
 
 
-        bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
+        //"fonts are req. to use android defaults or are otherwise complementary/not distracting"
+        //SO take out to use default...
+        //bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
 
         if (mCursor != null) {
             mRootView.setAlpha(0);
@@ -265,8 +263,8 @@ public class ArticleDetailFragment extends Fragment implements
             srctext = srctext.replaceAll("\\[(.*?)\\]", " ");   //remove placeholders for links and images inside square brackets
             srctext = srctext.replaceAll("<br/>", "\n\n"); //add back in newlines / paragraphs
 
-            //still some random, odd spaces and issues remain but without looking into and changing how article texts are captured/stored (i think beyond the scope of the improve UI objective);
-            // the articles in my opinion are much easier to read now.
+            //still some random, odd spaces and issues remain but without looking into and changing how article texts are captured/stored (i think beyond the scope of the "improve UI" objective),
+            // this much has improved the readability of the articles
 
             bodyView.setText(srctext); //looks the same with nothing done at all.
 
