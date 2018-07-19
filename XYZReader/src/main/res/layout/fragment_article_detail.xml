@@ -98,17 +98,30 @@
                     android:layout_marginLeft="@dimen/detail_inner_horiz_margin"
                     android:layout_marginRight="@dimen/detail_inner_horiz_margin"
                     android:paddingBottom="@dimen/detail_body_bottom_margin"
-                    android:textColor="@color/ltgray"
+
                     android:textColorLink="@color/colorAccent"
                     android:textSize="@dimen/detail_body_text_size"
-                    android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier" />
+                    android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier"
 
-            </com.example.xyzreader.ui.MaxWidthLinearLayout>  <!-- @color/theme_accent -->
+                    android:textAlignment="textStart"
+                    />
+
+            </com.example.xyzreader.ui.MaxWidthLinearLayout>  <!-- @color/theme_accent, body text color lght gray-->
 
         </FrameLayout>
     </com.example.xyzreader.ui.ObservableScrollView>
 
-    <ImageButton android:id="@+id/share_fab"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_share"
+        android:layout_margin="16dp"
+        android:elevation="@dimen/fab_elevation"
+        />
+
+    <!--<ImageButton android:id="@+id/share_fab"
         android:stateListAnimator="@anim/fab_state_list_anim"
         android:background="@drawable/add_fab_background"
         android:layout_gravity="bottom|end"
@@ -118,6 +131,6 @@
         android:layout_height="56dp"
         android:src="@drawable/ic_share"
         android:elevation="@dimen/fab_elevation"
-        android:contentDescription="@string/action_share" />
+        android:contentDescription="@string/action_share" />-->
 
 </com.example.xyzreader.ui.DrawInsetsFrameLayout>

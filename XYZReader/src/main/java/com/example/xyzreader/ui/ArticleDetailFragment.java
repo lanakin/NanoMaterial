@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.graphics.Palette;
 import android.text.Html;
@@ -27,6 +28,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.TextNode;
+import org.jsoup.safety.Whitelist;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -145,9 +151,20 @@ public class ArticleDetailFragment extends Fragment implements
 
         mStatusBarColorDrawable = new ColorDrawable(0);
 
-        mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
+       /* mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {  /* fab button */
+            public void onClick(View view) {  *//* fab button *//*
+                startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
+                        .setType("text/plain")
+                        .setText("Some sample text")
+                        .getIntent(), getString(R.string.action_share)));
+            }
+        });*/
+
+        FloatingActionButton fab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
                         .setType("text/plain")
                         .setText("Some sample text")
@@ -237,7 +254,22 @@ public class ArticleDetailFragment extends Fragment implements
                                 + "</font>"));
 
             }
-            bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")));
+
+           // bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")));
+            //this looks bad. weird, jumping to new line in middle of a sentence. doesn't appear to be any html tags --except images? and/or links are marked in [] like [screengrab]
+
+            //debugging the source shows that odd bad spacing = "/r/n" where new paragraphs and proper line breaks appear to be "/r/n/r/n" SO
+
+            String srctext = mCursor.getString(ArticleLoader.Query.BODY).replaceAll("\\r\\n\\r\\n", "<br/>");  //mark "proper" newlines
+            srctext = srctext.replaceAll("\\r\\n", " "); //remove newlines in middle of sentences that are left
+            srctext = srctext.replaceAll("\\[(.*?)\\]", " ");   //remove placeholders for links and images inside square brackets
+            srctext = srctext.replaceAll("<br/>", "\n\n"); //add back in newlines / paragraphs
+
+            //still some random, odd spaces and issues remain but without looking into and changing how article texts are captured/stored (i think beyond the scope of the improve UI objective);
+            // the articles in my opinion are much easier to read now.
+
+            bodyView.setText(srctext); //looks the same with nothing done at all.
+
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
                     .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
                         @Override
