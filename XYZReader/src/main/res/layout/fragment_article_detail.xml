@@ -120,6 +120,7 @@
         android:layout_margin="16dp"
         android:elevation="@dimen/fab_elevation"
         android:contentDescription="@string/action_share"
+        android:translationZ="6dp"
         />
 
     <!--<ImageButton android:id="@+id/share_fab"

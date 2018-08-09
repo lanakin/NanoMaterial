@@ -18,7 +18,7 @@ android {
     //buildToolsVersion "25.0.2"  //appropriate default version based on gradle plugin is used
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 25
     }
 }
